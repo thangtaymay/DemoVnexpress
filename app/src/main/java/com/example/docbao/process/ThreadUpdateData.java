@@ -40,10 +40,10 @@ public class ThreadUpdateData extends AsyncTask<Void, Integer, ArrayList<VnExpre
             Log.e("vnExpressCategory", "bắt đầu  cào " + vnExpressCategoryArrayList.size() + " Thể Loại");//
             for (VnExpressCategory vnExpressCategory : vnExpressCategoryArrayList) {//
                 String link_the_loai = vnExpressCategory.getLink();
-//                Log.e("Abc", "link chuẩn bị cào " + link_the_loai);
+                Log.e("Abc", "link chuẩn bị cào " + link_the_loai);
                 Document doc = Jsoup.connect(link_the_loai).get(); // vao trang web
                 Elements items = doc.select("item");
-//                Log.e("doc_rss", "Có tưng đây item " + items.size() + "");
+                Log.e("doc_rss", "Có tưng đây item " + items.size() + "");
 
                 publishProgress(vnExpressItems.size());
 
@@ -60,7 +60,7 @@ public class ThreadUpdateData extends AsyncTask<Void, Integer, ArrayList<VnExpre
                     bai_bao.setLink_the_loai(link_the_loai);
                     vnExpressItems.add(bai_bao);
 
-                    Log.e("demo",bai_bao.toString());
+//                    Log.e("bai bao",bai_bao.toString());
                 }
             }
         } catch (Exception e) {

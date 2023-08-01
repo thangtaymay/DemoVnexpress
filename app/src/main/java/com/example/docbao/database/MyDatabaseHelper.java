@@ -62,21 +62,54 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         // implement upgrade logic here
     }
 
-    public void addUser(VnExpressItem vn) {
-        SQLiteDatabase db = getWritableDatabase();
+//    public void addUser(VnExpressItem vn) {
+//        SQLiteDatabase db = getWritableDatabase();
+//
+//        ContentValues values = new ContentValues();
+//        values.put(COLUMN_TITLE, vn.getTitle());
+//        values.put(COLUMN_DESCIPTION, vn.getDesciption());
+//        values.put(COLUMN_IMG, vn.getImg());
+//        values.put(COLUMN_LINK, vn.getLink());
+//        values.put(COLUMN_TIME, vn.getTime());
+//
+//        long result = db.insert(TABLE_NAME, null, values);
+//
+//        db.close();
+//    }
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_TITLE, vn.getTitle());
-        values.put(COLUMN_DESCIPTION, vn.getDesciption());
-        values.put(COLUMN_IMG, vn.getImg());
-        values.put(COLUMN_LINK, vn.getLink());
-        values.put(COLUMN_TIME, vn.getTime());
+    public void addUser(VnExpressItem item) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-        long result = db.insert(TABLE_NAME, null, values);
+        // Kiểm tra xem giá trị của trường link đã tồn tại trong cơ sở dữ liệu chưa
+        Cursor cursor = db.query(
+                "VnExpressItem",
+                new String[]{"link"},
+                "link = ?",
+                new String[]{item.getLink()},
+                null,
+                null,
+                null
+        );
 
+        if (cursor.getCount() == 0) {
+            // Giá trị của trường link chưa tồn tại trong cơ sở dữ liệu, thêm dữ liệu mới
+            ContentValues values = new ContentValues();
+
+            values.put(COLUMN_TITLE, item.getTitle());
+            values.put(COLUMN_DESCIPTION, item.getDesciption());
+            values.put(COLUMN_IMG, item.getImg());
+            values.put(COLUMN_LINK, item.getLink());
+            values.put(COLUMN_TIME, item.getTime());
+
+            db.insert("VnExpressItem", null, values);
+        } else {
+            // Giá trị của trường link đã tồn tại, bạn có thể cập nhật dữ liệu tại đây (tuỳ vào yêu cầu của dự án) hoặc bỏ qua việc thêm dữ liệu mới.
+            // Ví dụ, bạn có thể sử dụng db.update(...) để cập nhật dữ liệu cho mục đã tồn tại.
+        }
+
+        cursor.close();
         db.close();
     }
-
 
 
 }

@@ -1,6 +1,13 @@
 package com.example.docbao.objects;
 
-public class VnExpressItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
+
+public class VnExpressItem implements Serializable {
     String title;
     String desciption;
     String img;
@@ -85,4 +92,16 @@ public class VnExpressItem {
     public void setTime(String time) {
         this.time = time;
     }
+
+    // Phần triển khai Parcelable
+    protected VnExpressItem(Parcel in) {
+        title = in.readString();
+        desciption = in.readString();
+        img = in.readString();
+        link = in.readString();
+        time = in.readString();
+    }
+
+
+
 }

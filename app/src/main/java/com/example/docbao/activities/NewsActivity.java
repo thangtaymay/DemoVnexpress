@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -27,12 +28,14 @@ import java.util.ArrayList;
 
 public class NewsActivity extends Activity {
 
-//     khai báo mảng động ArrayList có kiểu dữ liệu là 1 đối tượng VnExpressItem
+    //     khai báo mảng động ArrayList có kiểu dữ liệu là 1 đối tượng VnExpressItem
     ArrayList<VnExpressItem> vnExpressItems;
     TextView tvTitle;
     ImageView imageViewBack;
     ProgressBar progressBarTaiDuLieu;
     ListView lvBaiBao;
+
+    public static VnExpressItem vnExpressItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class NewsActivity extends Activity {
         lvBaiBao = findViewById(R.id.lv_bai_bao);
         imageViewBack = findViewById(R.id.imv_back);
 
+        Log.e("xxxxxx","xxxx");
 
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +76,21 @@ public class NewsActivity extends Activity {
         lvBaiBao.setVisibility(View.GONE); // an view di
         progressBarTaiDuLieu.setVisibility(View.VISIBLE); // hien view di
 
+        lvBaiBao.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                vnExpressItem = vnExpressItems.get(i);
 
+//
+                Log.e("eee","eee"+vnExpressItem.getImg());
+
+               Intent intent = new Intent(NewsActivity.this, ImageActivity.class);
+                intent.putExtra("VnExpressItem", vnExpressItem);
+                startActivity(intent);
+
+            }
+
+        });
     }
 
 
@@ -82,14 +100,14 @@ public class NewsActivity extends Activity {
         public void handleMessage(@NonNull Message msg) {
             if (msg.what == MyThreadRSSReader.ThanhCong) {
                 vnExpressItems = (ArrayList<VnExpressItem>) msg.obj;
-                for (VnExpressItem vnExpressItem : vnExpressItems) {
-                    Log.e("--------", "---------------------------");
-                    Log.e("title", vnExpressItem.getTitle());
-                    Log.e("desciption", vnExpressItem.getDesciption());
-                    Log.e("img", vnExpressItem.getImg());
-                    Log.e("link", vnExpressItem.getLink());
-                    Log.e("time", vnExpressItem.getTime());
-                }
+//                for (VnExpressItem vnExpressItem : vnExpressItems) {
+//                    Log.e("--------", "---------------------------");
+//                    Log.e("title", vnExpressItem.getTitle());
+//                    Log.e("desciption", vnExpressItem.getDesciption());
+//                    Log.e("img", vnExpressItem.getImg());
+//                    Log.e("link", vnExpressItem.getLink());
+//                    Log.e("time", vnExpressItem.getTime());
+//                }
 
                 initListViewData();
 

@@ -21,7 +21,14 @@ public class MyThreadRSSReader extends Thread {
     Handler handler;
     ArrayList<VnExpressItem> vnExpressItems;
 
-    public MyThreadRSSReader(String url_rss, Handler handler) {
+    public void setHandler(Handler handler){
+        this.handler = handler;
+    }
+    public  void setUrl_rss(String url_rss){
+        this.url_rss = url_rss;
+    }
+
+    public MyThreadRSSReader(String url_rss,Handler handler) {
         this.url_rss = url_rss;
         this.handler = handler;
         vnExpressItems = new ArrayList<VnExpressItem>();
@@ -57,4 +64,5 @@ public class MyThreadRSSReader extends Thread {
         }
         handler.sendMessage(message);
     }
+
 }

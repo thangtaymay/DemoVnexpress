@@ -37,7 +37,6 @@ public class HomeActivity extends Activity {
     //    khai báo mảng động ArrayList có kiểu dữ liệu là 1 đối tượng VnExpressCategory
     public static ArrayList<VnExpressCategory> vnExpressCategoryArrayList;// mảng thể loaj
     ArrayList<VnExpressItem> vnExpressItems; // mảng bài báo
-
     MyDatabaseHelper dbHelper;
 
     //    khai báo ListView
@@ -52,6 +51,8 @@ public class HomeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.e("eee","vao onCreate");
 
         setContentView(R.layout.activity_home);//
 
@@ -76,7 +77,7 @@ public class HomeActivity extends Activity {
             @Override
             public void onResult(ArrayList<VnExpressItem> vnExpressItems) {
 // cập nhật lại giao diện
-                Log.e("ádasdasd", "cập nhật lại giao diện " + vnExpressItems.size());
+                Log.e("eee", "cập nhật lại giao diện " + vnExpressItems.size());
                 if (progressDialog.isShowing()) progressDialog.dismiss();
             }
         }).execute();
@@ -85,6 +86,7 @@ public class HomeActivity extends Activity {
     }
 
     private void initView() {
+        Log.e("eee","vao initView");
 //        Ánh xạ tìm ListView
         listCategory = (ListView) this.findViewById(R.id.list_cate_gory);
 
@@ -118,6 +120,8 @@ public class HomeActivity extends Activity {
 
     //    tạo hàm initialData để truyền dữ liệu
     private void initialData() {
+
+        Log.e("eee","vao  initialData()");
 
         vnExpressCategoryArrayList = new ArrayList<>();// mang du lieu
 
@@ -170,6 +174,8 @@ public class HomeActivity extends Activity {
 
     private void addUserToDatabase() {
 
+        Log.e("eee","vao addUserToDatabase()");
+
         VnExpressItem vnExpressItem = new VnExpressItem("title", "desiption", "img", "link", "time");
 
         dbHelper.addUser(vnExpressItem);
@@ -181,15 +187,15 @@ public class HomeActivity extends Activity {
         public void handleMessage(@NonNull Message msg) {
             if (msg.what == MyThreadRSSReader.ThanhCong) {
                 vnExpressItems = (ArrayList<VnExpressItem>) msg.obj;
-                Log.e("vnExpressCategory", "cào được " + vnExpressItems.size() + " bài báo");
-//                for (VnExpressItem vnExpressItem : vnExpressItems) {
+                Log.e("eee", "vnExpressCategory cào được " + vnExpressItems.size() + " bài báo");
+                for (VnExpressItem vnExpressItem : vnExpressItems) {
 //                    Log.e("--------", "---------------------------");
 //                    Log.e("title", vnExpressItem.getTitle());
 //                    Log.e("desciption", vnExpressItem.getDesciption());
 //                    Log.e("img", vnExpressItem.getImg());
 //                    Log.e("link", vnExpressItem.getLink());
 //                    Log.e("time", vnExpressItem.getTime());
-//                }
+                }
             } else {
             }
         }
